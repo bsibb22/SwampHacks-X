@@ -17,13 +17,20 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var count = 1
+	$"Lobby Text".text = "Lobby (" + str(GameManager.Players.size()) + "/8):"
+	for i in GameManager.Players:
+		$"Lobby Text".text += "\n" + str(count) + ". " + GameManager.Players[i].name
+		count += 1
 	pass
 
 func player_connected(id) -> void:
 	print("Player Connected " + str(id))
+
 	
 func player_disconnected(id) -> void:
 	print("Player Disconnected " + str(id))
+	GameManager.Players.erase(id)
 	
 func connected_to_server() -> void:
 	print("Connected to Server")
@@ -63,6 +70,7 @@ func _on_host_button_down() -> void:
 		print("Waiting for Players")
 		SendPlayerInformation($LineEdit.text, multiplayer.get_unique_id())
 		hosting = true
+		$Label3.text = ""
 	else:
 		$Label3.text = "Already hosting"
 	pass # Replace with function body.
@@ -71,18 +79,24 @@ func _on_host_button_down() -> void:
 func _on_join_button_down() -> void:
 	if !joined:
 		peer = ENetMultiplayerPeer.new()
+		if $LineEdit2.text == "":
+			$Label3.text = "Could not connect to host. Please ensure you have entered a valid IPv4 address."
+			return
 		var error = peer.create_client($LineEdit2.text, port)
-		if error != OK or $LineEdit2.text == "":
+		if error != OK:
 			print("Cannot connect: " + str(error))
 			$Label3.text = "Could not connect to host. Please ensure you have entered a valid IPv4 address."
 			return
+		
 		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 		multiplayer.set_multiplayer_peer(peer)
 		$Label3.text = ""
 		$Join.text = "Disconnect"
 		joined = true
 	else:
+		GameManager.Players.erase(multiplayer.get_unique_id())
 		multiplayer.multiplayer_peer.disconnect_peer(1)
+		GameManager.Players.clear()
 		$Join.text = "Join"
 		$Label3.text = ""
 		joined = false
@@ -106,4 +120,5 @@ func _on_close_button_down() -> void:
 	GameManager.Players.clear()
 	multiplayer.set_multiplayer_peer(null)
 	hosting = false
+	GameManager.playerCount = 0
 	pass # Replace with function body.
