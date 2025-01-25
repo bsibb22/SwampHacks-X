@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="3_vwe7c"]
 [ext_resource type="Texture2D" uid="uid://bo3tp5bw4l543" path="res://Sprites/card_-1.png" id="4_qpg36"]
 [ext_resource type="PackedScene" uid="uid://dfuy1mgqyj65a" path="res://Cards/player.tscn" id="5_7i85k"]
-[ext_resource type="Script" path="res://Pile.gd" id="6_h2e2v"]
+[ext_resource type="Script" path="res://Scripts/Pile.gd" id="6_h2e2v"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_e1sfi")
