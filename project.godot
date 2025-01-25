@@ -12,6 +12,11 @@ config_version=5
 
 config/name="dutch"
 config/features=PackedStringArray("4.3", "Mobile")
+config/icon="res://icon.svg"
+
+[autoload]
+
+global="*res://global.gd"
 
 [rendering]
 
