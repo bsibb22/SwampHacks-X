@@ -80,9 +80,5 @@ func _ready() -> void:
 	# Deal the cards
 	for i in range(global.num_players):
 		players.push_back([])
-	
-	for i in range(global.num_players):
 		deal_card(i, 4)
 		print(players[i])
-		
-	

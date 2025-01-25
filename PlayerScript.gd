@@ -6,9 +6,9 @@ var card_scene = preload("res://Objects/card.tscn")
 var is_turn: bool = false
 
 func update_hand():
-	print(get_parent().players)
-	while get_child_count() > 0:
-		get_child(0).queue_free()
+	for c in get_children():
+		c.free()
+	
 	for i in range(get_parent().players[global.pid].size()):
 		var c = get_parent().players[global.pid][i]
 		c.owner = global.pid
@@ -20,6 +20,5 @@ func update_hand():
 	for i in range(get_child_count()):
 		get_child(i).position = Vector2(-180 + floor(360 / (get_child_count())) * i, 0)
 		
-		
-func _ready():
-	connect("update", update_hand())
+func _ready() -> void:
+	get_parent().update.connect(update_hand)

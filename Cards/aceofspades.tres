@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_8d1rr")
 card_value = 1
+id = 0
 owner = 0
