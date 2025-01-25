@@ -23,6 +23,8 @@ func shuffle_deck() -> void:
 			continue
 		c.owner = 8
 		deck.push(c)
+	
+	pile.push(temp)
 
 var deck = [] # stack
 var players = [] # 2d player array
