@@ -4,5 +4,10 @@
 
 [resource]
 script = ExtResource("1_8d1rr")
+<<<<<<< HEAD
 card_value = 1
 owner = 0
+=======
+card_value = 0
+owner = 9
+>>>>>>> 916d442d8354ab1b431c466e85722e2566e0a910

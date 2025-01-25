@@ -7,8 +7,9 @@ class_name CardData
 0-7: players 1-8
 8: deck (hidden)
 9: discard (pile)
+10: mistake cards
 '''
-@export_range(0, 9) var owner: int = 9
+@export_range(0, 10) var owner: int = 8
 
 '''
 CARD IDS
@@ -23,3 +24,6 @@ func _init(_id: int, _owner = 9):
 	card_value = 0 if id >= 52 else (id % 13) + 1
 	id = _id
 	owner = _owner
+
+func update_owner(pid):
+	owner = pid
