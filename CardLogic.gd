@@ -1,17 +1,13 @@
 extends Node
 
-@onready var IMAGE_BANK = {
-  "HEART_A": load("res://Sprites/ace.png"),
-  "CARDBACK": load("res://Sprites/card_-1.png")
-}
+@onready var IMAGE_BANK = []
+@onready var CARDBACK = load("res://Sprites/card_-1.png")
 
-func load_img(img_key: int = -1) -> Sprite2D:
-	var img_name = "card_" + str(img_key)
-	if IMAGE_BANK[img_name]:
-		return IMAGE_BANK[img_name]
+func load_img(id) -> Sprite2D:
+	if(id == -1):
+		return CARDBACK
 	else:
-		print("ERROR: no image found with key %s!" % img_key)
-		return Sprite2D.new()
+		return IMAGE_BANK[id]
 
 func shuffle_deck() -> void:
 	# Save the most recently played card
@@ -40,11 +36,13 @@ var deck = [] # stack
 var players = [] # 2d player array
 var pile = []
 
-func load_game(num_players: int) -> void:
+func initialize(num_players: int) -> void:
 	# Create the pile of cards
 	for i in range(54):
 		# make new card with id i and owner pile
 		var c: CardData = CardData.new(i)
+		var img_filename = "res://Sprites/card_%s.png"
+		IMAGE_BANK.push_back(load(img_filename % str(i)))
 		deck.push_back(c)
 
 	# Shuffle the deck
@@ -52,6 +50,10 @@ func load_game(num_players: int) -> void:
 
 	# Deal the cards
 	for i in range(num_players):
-		players[i] = []
-		for j in range(3):
-			players[i].push_back(deck.pop_back())
+		players.push_back([])
+		deal_card(i, 3)
+			
+func _ready():
+	var num_players = 4
+	initialize(num_players)
+	
