@@ -4,9 +4,11 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+var player_id
+
 func _ready():
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
-	print(str(str(name).to_int()))
+	$MultiplayerSynchronizer.set_multiplayer_authority(player_id)
+	print("Mult Control: " + str(name))
 
 
 func _physics_process(delta: float) -> void:

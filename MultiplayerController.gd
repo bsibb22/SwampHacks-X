@@ -38,6 +38,7 @@ func StartGame() -> void:
 	
 @rpc("any_peer")
 func SendPlayerInformation(name, id):
+	print("Name: " + name + " ID: " + str(id))
 	if !GameManager.Players.has(id):
 		GameManager.Players[id] = {
 			"name" : name,
@@ -70,5 +71,7 @@ func _on_join_button_down() -> void:
 
 
 func _on_start_button_down() -> void:
+	for i in GameManager.Players:
+		print("Name: " + GameManager.Players[i].name + " ID: " + str(GameManager.Players[i].id))
 	StartGame.rpc()
 	pass # Replace with function body.
