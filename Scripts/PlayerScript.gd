@@ -5,6 +5,12 @@ var card_scene = preload("res://Objects/card.tscn")
 @export var pid: int = 0
 var is_turn: bool = false
 
+func get_score() -> int:
+	var score: int = 0
+	for c in get_children():
+		score += c.data.card_value
+	return score
+
 func update_hand():
 	for c in get_children():
 		c.free()
