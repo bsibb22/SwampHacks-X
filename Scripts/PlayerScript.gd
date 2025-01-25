@@ -14,7 +14,6 @@ func update_hand():
 		c.owner = global.pid
 		var cs = card_scene.instantiate()
 		cs.data = c
-		cs.rotation = deg_to_rad(randf_range(-10, 10))
 		add_child(cs)
 
 	for i in range(get_child_count()):

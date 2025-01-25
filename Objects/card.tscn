@@ -1,13 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgbnggqg8d4l2"]
+[gd_scene load_steps=5 format=3 uid="uid://bgbnggqg8d4l2"]
 
 [ext_resource type="Script" path="res://Scripts/CardScript.gd" id="1_s2o42"]
 [ext_resource type="Texture2D" uid="uid://c7r0hec26k2tq" path="res://Sprites/card_0.png" id="2_2u3yk"]
-[ext_resource type="Resource" uid="uid://6mwe0i82rv04" path="res://Cards/aceofspades.tres" id="2_sncwe"]
+[ext_resource type="Script" path="res://Cards/CardData.gd" id="2_i3fmq"]
+
+[sub_resource type="Resource" id="Resource_wp4ei"]
+script = ExtResource("2_i3fmq")
+card_value = 1
+id = 0
+owner = 0
 
 [node name="Card" type="Node2D"]
 scale = Vector2(0.15, 0.15)
 script = ExtResource("1_s2o42")
-data = ExtResource("2_sncwe")
+data = SubResource("Resource_wp4ei")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_2u3yk")

@@ -57,8 +57,27 @@ func swap_card(pid_1, pid_2, card_1, card_2) -> void:
 	card_2.update_owner(pid_1)
 	card_1.update_owner(pid_2)
 	update.emit()
+
+# TURN LOGIC
+var player_ids = [global.pid, 123, 234, 345]
+var turn_counter: int = 0
+var turn_seconds: int = 5
+
+func start_turns() -> void:
+	var turn_timer: Timer = Timer.new()
 	
-	
+	add_child(turn_timer)
+	turn_timer.timeout.connect(change_turns)
+	turn_timer.wait_time = turn_seconds
+	turn_timer.autostart = true
+	turn_timer.start()
+
+func change_turns() -> void:
+	print("turns changed!")
+	turn_counter += 1
+	if turn_counter >= global.num_players:
+		turn_counter = 0
+
 # ---- #
 
 var deck = [] # stack
@@ -67,6 +86,8 @@ var pile = [] # face up pile of cards you can choose from
 var garbage = [] # cards that have been lost to time
 
 func _ready() -> void:
+	start_turns()
+	
 	# Create the pile of cards
 	for i in range(54):
 		# make new card with id i and owner pile
@@ -82,3 +103,6 @@ func _ready() -> void:
 		players.push_back([])
 		deal_card(i, 4)
 		print(players[i])
+
+func _process(_delta) -> void:
+	print(player_ids[turn_counter])
