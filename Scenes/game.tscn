@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d11qd3svd0nas"]
+[gd_scene load_steps=8 format=3 uid="uid://brpwuwsr5kvqp"]
 
 [ext_resource type="Script" path="res://Scripts/CardLogic.gd" id="1_3xefb"]
 [ext_resource type="Texture2D" uid="uid://bll58tk6aa0ex" path="res://Sprites/background.tres" id="2_idmhq"]
 [ext_resource type="Texture2D" uid="uid://di12ch2mlm8ti" path="res://Sprites/PokerTable_Sketch.png" id="3_ypst2"]
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="4_80nag"]
-[ext_resource type="Texture2D" uid="uid://bo3tp5bw4l543" path="res://Sprites/card_-1.png" id="5_5dtl7"]
+[ext_resource type="Texture2D" uid="uid://bo3tp5bw4l543" path="res://Sprites/CardSprites/-1.png" id="5_5dtl7"]
 [ext_resource type="Script" path="res://Scripts/Pile.gd" id="6_a7jie"]
 [ext_resource type="PackedScene" uid="uid://dfuy1mgqyj65a" path="res://Cards/player.tscn" id="6_hto42"]
 
@@ -29,6 +29,10 @@ script = ExtResource("4_80nag")
 scale = Vector2(0.534483, 0.504287)
 texture = ExtResource("5_5dtl7")
 
+[node name="Area2D" type="Area2D" parent="Deck/Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck/Sprite2D/Area2D"]
+
 [node name="Pile" type="Node2D" parent="."]
 position = Vector2(150, 0)
 script = ExtResource("6_a7jie")
@@ -41,3 +45,6 @@ texture = ExtResource("5_5dtl7")
 position = Vector2(0, 245)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="mouse_entered" from="Deck/Sprite2D/Area2D" to="Deck" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Deck/Sprite2D/Area2D" to="Deck" method="_on_area_2d_mouse_exited"]

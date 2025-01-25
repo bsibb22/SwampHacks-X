@@ -3,7 +3,7 @@ extends Node2D
 signal update
 
 @onready var IMAGE_BANK = []
-@onready var CARDBACK = load("res://Sprites/card_-1.png")
+@onready var CARDBACK = load("res://Sprites/CardSprites/-1.png")
 
 func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
@@ -92,7 +92,7 @@ func _ready() -> void:
 	for i in range(54):
 		# make new card with id i and owner pile
 		var c: CardData = CardData.new(i) # change to i after card images are added
-		IMAGE_BANK.push_back(load("res://Sprites/card_" + str(i) + ".png"))
+		IMAGE_BANK.push_back(load("res://Sprites/CardSprites/" + str(i) + ".png"))
 		deck.push_back(c)
 
 	# Shuffle the deck

@@ -1,5 +1,5 @@
 extends Node2D
-
+var hovering = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,7 +11,10 @@ func _process(delta: float) -> void:
 	pass
 
 # func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-func _input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if global.pid == get_node("../").player_ids[get_node("../").turn_counter]:
-			get_parent().deal_card(0, 1)
+
+func _on_area_2d_mouse_entered() -> void:
+	hovering = true
+	print("entered")
+
+func _on_area_2d_mouse_exited() -> void:
+	hovering = false
