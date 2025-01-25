@@ -13,3 +13,8 @@ func load_img(img_key: String) -> Sprite2D:
 		return Sprite2D.new()
 
 var value_bank = ['$', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+func _shuffle(arr = []):
+	pass
+	
+func _ready() -> void:
+	
