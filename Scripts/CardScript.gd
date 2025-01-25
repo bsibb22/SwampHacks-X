@@ -5,8 +5,7 @@ extends Node2D
 @onready var main = get_node("../../")
 
 func _ready() -> void:
-	if(data.id <= 0):
-		sprite.texture = main.load_img(data.id)
+	sprite.texture = main.load_img(-1)
 		
 # finish coding this after multiplayer is added
 func _input(event):
