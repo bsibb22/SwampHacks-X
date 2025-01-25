@@ -16,6 +16,8 @@ func shuffle_deck() -> void:
 	var temp = pile.pop_back()
 
 	# Randomly add cards from the discard pile to the deck
+	pile.append(garbage)
+	garbage.clear()
 	while pile.size() > 0:
 		var c = pile.pick_random()
 		if (c == temp):
@@ -26,18 +28,42 @@ func shuffle_deck() -> void:
 	pile.push_back(temp)
 
 
-func deal_card(player_id, num_cards) -> void:
+func deal_card(pid, num_cards) -> void:
 	for i in range(num_cards + 1):
-		players[player_id].push_back(deck.pop_back())
+		players[pid].push_back(deck.pop_back())
 		$Player.update_hand()
 		if(deck.size() < 1):
 			shuffle_deck()
 
+
+# for these 2 functions it is assumed the hands will update later
+func remove_card(pid, card, valid) -> void:
+	players[pid].remove(card)
+	if valid:
+		# add card to pile if valid play
+		pile.push_back(card)
+		card.update_owner(9)
+	else:
+		# add card to garbage if not valid play
+		garbage.push_back(card)
+		card.update_owner(10)
+		
+		
+	
+
+func swap_card(pid_1, pid_2, card_1, card_2) -> void:
+	players[pid_1][players[pid_1].find(card_1)] = card_2
+	players[pid_2][players[pid_2].find(card_2)] = card_1
+	card_2.update_owner(pid_1)
+	card_1.update_owner(pid_2)
+	
+	
 # ---- #
 
 var deck = [] # stack
 var players = [] # 2d player array
-var pile = []
+var pile = [] # face up pile of cards you can choose from
+var garbage = [] # cards that have been lost to time
 
 func initialize(num_players: int) -> void:
 	# Create the pile of cards
