@@ -4,6 +4,5 @@
 
 [resource]
 script = ExtResource("1_8d1rr")
-card_value = 1
-suit = "HEART"
-owner = 0
+card_value = 0
+owner = 9

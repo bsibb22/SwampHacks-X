@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://cmgdy3c62gy7u"]
+
+[ext_resource type="Script" path="res://Cards/CardData.gd" id="1_0uv8f"]
+
+[resource]
+script = ExtResource("1_0uv8f")
+card_value = 0
+owner = 9

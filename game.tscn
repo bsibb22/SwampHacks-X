@@ -1,3 +1,9 @@
-[gd_scene format=3 uid="uid://brpwuwsr5kvqp"]
+[gd_scene load_steps=2 format=3 uid="uid://brpwuwsr5kvqp"]
+
+[ext_resource type="PackedScene" uid="uid://bgbnggqg8d4l2" path="res://Objects/card.tscn" id="1_t7lq1"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Card" parent="." instance=ExtResource("1_t7lq1")]
+position = Vector2(580, 336)
+scale = Vector2(0.25, 0.25)

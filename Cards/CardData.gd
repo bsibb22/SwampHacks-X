@@ -1,7 +1,7 @@
 extends Resource
 class_name CardData
 
-@export_range(0, 53) var card_value = 0
+@export var card_value: int = 0
 '''
 0-7: players 1-8
 8: deck (hidden)

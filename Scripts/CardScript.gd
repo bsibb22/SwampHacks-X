@@ -1,18 +1,13 @@
-extends Sprite2D
+extends Node2D
 
-@export var data: Resource
+@export var data: CardData
 
 @onready var area = $Area2D
 @onready var sprite = $Sprite2D
 
 func _ready() -> void:
-	sprite.texture = global.load_img(data.suit + "_" + data.card_value)
-	pass
+	sprite.texture = global.load_img("card_" + str(data.card_value))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
-
-func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	print_rich(data.card_value + ", " + data.card_suit)
-	pass # Replace with function body.
