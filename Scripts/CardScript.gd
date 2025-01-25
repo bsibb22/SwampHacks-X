@@ -9,7 +9,7 @@ func _ready() -> void:
 		
 # finish coding this after multiplayer is added
 func _input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	'''if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var top_card = main.pile.back()
 		if top_card == null:
 			return
@@ -32,4 +32,5 @@ func _input(event):
 				main.remove_card(global.pid, data, false)
 				main.deal_card(global.pid, 2)
 			else:
-				main.remove_card(global.pid, data, true)
+				main.remove_card(global.pid, data, true)'''
+	pass

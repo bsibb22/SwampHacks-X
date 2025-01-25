@@ -15,4 +15,3 @@ func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 	# if(player.is_turn):
 		get_parent().deal_card(0, 1)
-		print("works")
