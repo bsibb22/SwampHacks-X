@@ -1,6 +1,6 @@
 extends Node2D
 
-signal player_dealt(_pid)
+signal update
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/card_-1.png")
@@ -22,18 +22,18 @@ func shuffle_deck() -> void:
 		var c = pile.pick_random()
 		if (c == temp):
 			continue
-		c.owner = 8
+		c.update_owner(8)
 		deck.push_back(c)
 	
 	pile.push_back(temp)
 
 
 func deal_card(pid, num_cards) -> void:
-	for i in range(num_cards + 1):
+	for i in range(num_cards):
 		players[pid].push_back(deck.pop_back())
-		$Player.update_hand()
 		if(deck.size() < 1):
 			shuffle_deck()
+	update.emit()
 
 
 # for these 2 functions it is assumed the hands will update later
@@ -47,8 +47,8 @@ func remove_card(pid, card, valid) -> void:
 		# add card to garbage if not valid play
 		garbage.push_back(card)
 		card.update_owner(10)
-		
-		
+	update.emit()
+			
 	
 
 func swap_card(pid_1, pid_2, card_1, card_2) -> void:
@@ -56,6 +56,7 @@ func swap_card(pid_1, pid_2, card_1, card_2) -> void:
 	players[pid_2][players[pid_2].find(card_2)] = card_1
 	card_2.update_owner(pid_1)
 	card_1.update_owner(pid_2)
+	update.emit()
 	
 	
 # ---- #
@@ -65,7 +66,7 @@ var players = [] # 2d player array
 var pile = [] # face up pile of cards you can choose from
 var garbage = [] # cards that have been lost to time
 
-func initialize(num_players: int) -> void:
+func _ready() -> void:
 	# Create the pile of cards
 	for i in range(54):
 		# make new card with id i and owner pile
@@ -74,15 +75,14 @@ func initialize(num_players: int) -> void:
 		deck.push_back(c)
 
 	# Shuffle the deck
-	deck.shuffle()
-
+		deck.shuffle()
+	
 	# Deal the cards
-	for i in range(num_players):
+	for i in range(global.num_players):
 		players.push_back([])
-		deal_card(i, 3)
+	
+	for i in range(global.num_players):
+		deal_card(i, 4)
 		print(players[i])
-			
-func _ready():
-	var num_players = 4
-	initialize(num_players)
+		
 	

@@ -12,6 +12,8 @@ func _ready() -> void:
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var top_card = main.pile.back()
+		if top_card == null:
+			return
 		var parent_pid = get_parent().pid
 		if parent_pid != global.pid:
 			# Card is opponent's card
@@ -32,5 +34,3 @@ func _input(event):
 				main.deal_card(global.pid, 2)
 			else:
 				main.remove_card(global.pid, data, true)
-		
-	
