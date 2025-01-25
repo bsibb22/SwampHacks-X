@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://brpwuwsr5kvqp"]
+[gd_scene load_steps=5 format=3 uid="uid://brpwuwsr5kvqp"]
 
 [ext_resource type="Texture2D" uid="uid://b1n4n2qsen3o4" path="res://Sprites/background.tres" id="1_0i2wg"]
 [ext_resource type="Texture2D" uid="uid://di12ch2mlm8ti" path="res://Sprites/PokerTable_Sketch.png" id="2_nc7f1"]
+[ext_resource type="Script" path="res://Scripts/deck.gd" id="3_vwe7c"]
+[ext_resource type="Texture2D" uid="uid://bo3tp5bw4l543" path="res://Sprites/card_-1.png" id="4_qpg36"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -14,3 +16,11 @@ texture = ExtResource("1_0i2wg")
 position = Vector2(1668, 1170)
 scale = Vector2(1.69087, 1.69087)
 texture = ExtResource("2_nc7f1")
+
+[node name="Deck" type="Node2D" parent="."]
+script = ExtResource("3_vwe7c")
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck"]
+position = Vector2(1609, 1133)
+scale = Vector2(1.01724, 0.95977)
+texture = ExtResource("4_qpg36")
