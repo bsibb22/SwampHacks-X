@@ -23,14 +23,14 @@ func shuffle_deck() -> void:
 		if (c == temp):
 			continue
 		c.owner = 8
-		deck.push(c)
+		deck.push_back(c)
 	
-	pile.push(temp)
+	pile.push_back(temp)
 
 
 func deal_card(player_id, num_cards) -> void:
 	for i in range(num_cards):
-		players[player_id].push(deck.pop)
+		players[player_id].push_back(deck.pop)
 		if(deck.size() < 1):
 			shuffle_deck()
 
@@ -45,7 +45,7 @@ func load_game(num_players: int) -> void:
 	for i in range(54):
 		# make new card with id i and owner pile
 		var c: CardData = CardData.new(i)
-		deck.push(c)
+		deck.push_back(c)
 
 	# Shuffle the deck
 	deck.shuffle()
@@ -54,4 +54,4 @@ func load_game(num_players: int) -> void:
 	for i in range(num_players):
 		players[i] = []
 		for j in range(3):
-			players[i].push(deck.pop_back())
+			players[i].push_back(deck.pop_back())
