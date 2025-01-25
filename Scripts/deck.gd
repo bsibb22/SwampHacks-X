@@ -14,5 +14,5 @@ func _process(delta: float) -> void:
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 	# if(player.is_turn):
-		card_logic.deal_card(0, 0)
+		get_parent().deal_card(0, 0)
 		print("works")

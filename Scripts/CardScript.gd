@@ -4,4 +4,5 @@ extends Node2D
 @onready var sprite = $Sprite2D
 
 func _ready() -> void:
-	sprite.texture = card_logic.load_img(data.card_value)
+	if(data.id <= 0):
+		sprite.texture = get_node("../../").load_img(data.id)
