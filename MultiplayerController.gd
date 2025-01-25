@@ -4,6 +4,7 @@ extends Control
 @export var port = 8910
 var peer
 var joined = false
+var hosting = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -51,15 +52,19 @@ func SendPlayerInformation(name, id):
 			SendPlayerInformation.rpc(GameManager.Players[i].name, i)
  
 func _on_host_button_down() -> void:
-	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, 8)
-	if error != OK:
-		print("Cannot host: " + str(error))
-		return
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)
-	print("Waiting for Players")
-	SendPlayerInformation($LineEdit.text, multiplayer.get_unique_id())
+	if !hosting:
+		peer = ENetMultiplayerPeer.new()
+		var error = peer.create_server(port, 8)
+		if error != OK:
+			print("Cannot host: " + str(error))
+			return
+		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+		multiplayer.set_multiplayer_peer(peer)
+		print("Waiting for Players")
+		SendPlayerInformation($LineEdit.text, multiplayer.get_unique_id())
+		hosting = true
+	else:
+		$Label3.text = "Already hosting"
 	pass # Replace with function body.
 
 
@@ -88,4 +93,17 @@ func _on_start_button_down() -> void:
 	for i in GameManager.Players:
 		print("Name: " + GameManager.Players[i].name + " ID: " + str(GameManager.Players[i].id))
 	StartGame.rpc()
+	pass # Replace with function body.
+
+
+func _on_close_button_down() -> void:
+	if multiplayer.is_server():
+		$Label3.text = "No longer hosting"
+	else:
+		$Label3.text = "Host is no longer hosting"
+	for i in GameManager.Players:
+		multiplayer.multiplayer_peer.disconnect_peer(GameManager.Players[i].id)
+	GameManager.Players.clear()
+	multiplayer.set_multiplayer_peer(null)
+	hosting = false
 	pass # Replace with function body.
