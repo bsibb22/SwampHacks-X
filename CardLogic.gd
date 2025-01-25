@@ -1,9 +1,11 @@
-extends Node
+extends Node2D
+
+signal player_dealt(_pid)
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/card_-1.png")
 
-func load_img(id) -> Sprite2D:
+func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
 		return CARDBACK
 	else:
@@ -25,8 +27,9 @@ func shuffle_deck() -> void:
 
 
 func deal_card(player_id, num_cards) -> void:
-	for i in range(num_cards):
-		players[player_id].push_back(deck.pop)
+	for i in range(num_cards + 1):
+		players[player_id].push_back(deck.pop_back())
+		get_tree().get_node("Player").update_hand()
 		if(deck.size() < 1):
 			shuffle_deck()
 
@@ -40,7 +43,7 @@ func initialize(num_players: int) -> void:
 	# Create the pile of cards
 	for i in range(54):
 		# make new card with id i and owner pile
-		var c: CardData = CardData.new(i)
+		var c: CardData = CardData.new(0)
 		var img_filename = "res://Sprites/card_%s.png"
 		IMAGE_BANK.push_back(load(img_filename % str(i)))
 		deck.push_back(c)
@@ -52,6 +55,7 @@ func initialize(num_players: int) -> void:
 	for i in range(num_players):
 		players.push_back([])
 		deal_card(i, 3)
+		print(players[i])
 			
 func _ready():
 	var num_players = 4
