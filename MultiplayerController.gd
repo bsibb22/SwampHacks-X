@@ -3,6 +3,7 @@ extends Control
 @export var Address = "127.0.0.1"
 @export var port = 8910
 var peer
+var joined = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,7 +22,7 @@ func player_connected(id) -> void:
 	print("Player Connected " + str(id))
 	
 func player_disconnected(id) -> void:
-	print("Player Disconnected " + id)
+	print("Player Disconnected " + str(id))
 	
 func connected_to_server() -> void:
 	print("Connected to Server")
@@ -53,7 +54,7 @@ func _on_host_button_down() -> void:
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 8)
 	if error != OK:
-		print("Cannot host: " + error)
+		print("Cannot host: " + str(error))
 		return
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
@@ -63,10 +64,23 @@ func _on_host_button_down() -> void:
 
 
 func _on_join_button_down() -> void:
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(Address, port)
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)
+	if !joined:
+		peer = ENetMultiplayerPeer.new()
+		var error = peer.create_client($LineEdit2.text, port)
+		if error != OK or $LineEdit2.text == "":
+			print("Cannot connect: " + str(error))
+			$Label3.text = "Could not connect to host. Please ensure you have entered a valid IPv4 address."
+			return
+		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+		multiplayer.set_multiplayer_peer(peer)
+		$Label3.text = ""
+		$Join.text = "Disconnect"
+		joined = true
+	else:
+		multiplayer.multiplayer_peer.disconnect_peer(1)
+		$Join.text = "Join"
+		$Label3.text = ""
+		joined = false
 	pass # Replace with function body.
 
 
