@@ -13,10 +13,10 @@ func load_img(img_key: String) -> Sprite2D:
 		return Sprite2D.new()
 
 func shuffle_deck() -> void:
-  # save the most recently played card
+	# save the most recently played card
 	var temp = pile.pop_back()
 
-	 # randomly add cards from the discard pile to the deck
+	# randomly add cards from the discard pile to the deck
 	while pile.length() > 0:
 		var c = pile.pick_random()
 		if (c == temp):
@@ -34,7 +34,7 @@ var pile = []
 
 func load_game(num_players: int) -> void:
 	# Create the pile of cards
-	for i in range(0, 54): 
+	for i in range(0, 54):
 		# make new card with id i and owner pile
 		var c: CardData = CardData.new(i)
 		deck.push(c)
