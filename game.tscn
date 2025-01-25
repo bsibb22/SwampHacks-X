@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://brpwuwsr5kvqp"]
+[gd_scene load_steps=3 format=3 uid="uid://brpwuwsr5kvqp"]
+
+[ext_resource type="Texture2D" uid="uid://b1n4n2qsen3o4" path="res://Sprites/background.tres" id="1_0i2wg"]
+[ext_resource type="Texture2D" uid="uid://di12ch2mlm8ti" path="res://Sprites/PokerTable_Sketch.png" id="2_nc7f1"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(1667, 1167)
+scale = Vector2(52.2188, 36.625)
+texture = ExtResource("1_0i2wg")
+
+[node name="PokerTableSketch" type="Sprite2D" parent="."]
+position = Vector2(1668, 1170)
+scale = Vector2(1.69087, 1.69087)
+texture = ExtResource("2_nc7f1")
