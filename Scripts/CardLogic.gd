@@ -15,6 +15,8 @@ var dutch = false
 var my_turn = false
 var turns_till_end = 9223372036854775807
 
+var selected_card_to_swap = null
+
 func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
 		return CARDBACK
@@ -140,6 +142,10 @@ func _ready() -> void:
 		print("player " + str(i) + "'s cards: ")
 		for j in players[i]:
 			print(j.card_value)
+			
+	print(deck.back().card_value)
+	pile.push_back(deck.pop_back())
+	update.emit()
 
 
 func _process(_delta) -> void:

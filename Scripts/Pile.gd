@@ -16,8 +16,9 @@ func _ready() -> void:
 	get_parent().update.connect(change_state)
 	
 func _input(event) -> void:
-	if can_play and get_parent().my_turn and hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		get_parent().pull_from_pile(get_parent().my_pid)
+	if get_parent().my_turn and hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		get_parent().selected_card_to_swap = get_parent().pile.back()
+		#get_parent().pull_from_pile(get_parent().my_pid)
 
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
