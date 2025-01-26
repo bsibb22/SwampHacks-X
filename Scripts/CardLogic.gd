@@ -69,7 +69,7 @@ func swap_card(pid_1, pid_2, card_1, card_2) -> void:
 
 # TURN LOGIC
 var turn_counter: int = 0
-var turn_seconds: int = 5
+var turn_seconds: int = 1
 
 func start_turns() -> void:
 	var turn_timer: Timer = Timer.new()
@@ -83,13 +83,17 @@ func start_turns() -> void:
 func change_turns() -> void:
 	print("turns changed!")
 	turn_counter += 1
-	turns_till_end -= 1
+	if dutch:
+		turns_till_end -= 1
 	if turn_counter >= num_players:
 		turn_counter = 0
 	if turn_counter == my_pid:
 		my_turn = true
+		if !dutch:
+			$"Control/Dutch Button".visible = true
 	else:
 		my_turn = false
+		$"Control/Dutch Button".visible = false
 
 # ---- #
 
@@ -100,7 +104,7 @@ var garbage = [] # cards that have been lost to time
 
 func _ready() -> void:
 	start_turns()
-	
+	$"Control/Dutch Button".visible = false
 	# match local and online ids
 	var local_id = 0
 	my_online_id = multiplayer.get_unique_id()
@@ -134,8 +138,23 @@ func _ready() -> void:
 
 func _process(_delta) -> void:
 	#Ending the game needs to be filled out
-	if turns_till_end <= 0:
+	if turns_till_end == 0:
 		print("Game Over")
+		$"@Timer@2".stop()
+		var winner_pid = 20
+		var winner_score = 9223372036854775807
+		for i in range(num_players):
+			var score = 0
+			for j in players[i]:
+				score += j.card_value
+			if score < winner_score:
+				winner_pid = i
+				winner_score = score
+		if my_pid == winner_pid:
+			print("winner winner chicken dinner")
+		else:
+			print("fuck you")
+		turns_till_end -= 1
 		var ending_menu = ending.instantiate()
 		add_child(ending_menu)
 
@@ -144,9 +163,7 @@ func _process(_delta) -> void:
 #This is broken
 func _on_dutch_button_button_down() -> void:
 	print("Dutch button pressed")
-	if my_turn and !dutch:
-		print("Turns till end: " + str(turns_till_end))
-		dutch = true
-		change_turns()
-		turns_till_end = GameManager.Players.size()
-	pass # Replace with function body.
+	turns_till_end = num_players
+	print("Turns till end: " + str(turns_till_end))
+	dutch = true
+	change_turns()
