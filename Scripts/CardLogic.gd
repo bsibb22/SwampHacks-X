@@ -88,6 +88,8 @@ func change_turns() -> void:
 		my_turn = true
 	else:
 		my_turn = false
+	if my_turn:
+		print("my turn")
 
 # ---- #
 
@@ -102,12 +104,15 @@ func _ready() -> void:
 	# match local and online ids
 	var local_id = 0
 	my_online_id = multiplayer.get_unique_id()
+	print("my online id: " + str(my_online_id))
 	for i in GameManager.Players:
 		var online_id = GameManager.Players[i].id
 		local_to_online_id.push_back(online_id)
 		online_to_local_id[online_id] = local_id
 		if online_id == my_online_id:
 			my_pid = local_id
+			if local_id == 0:
+				my_turn = true
 		print("pid " + str(local_id) + " matched to online id " + str(GameManager.Players[i].id))
 		local_id += 1
 		
