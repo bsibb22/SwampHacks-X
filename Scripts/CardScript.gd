@@ -38,10 +38,16 @@ func _input(event):
 				main.pile.push_back(data)
 				
 				if data.card_value == 10:
-					return
+					main.tennessee()
 				#If a Jack is played
 				elif data.card_value == 11:
 					main.jacking_off()
+				#If a Queen is played
+				elif data.card_value == 12:
+					return
+				#If a King is played
+				elif data.card_value == 13:
+					return
 				
 				# the card belongs to you!
 				if data.owner == my_pid:
@@ -95,6 +101,9 @@ func _input(event):
 		elif main.flippable_initial and !previously_flipped:
 			meta_flip()
 			get_parent()	.flip_init()
+		elif main.tenten:
+			meta_flip()
+			main.tennessee()
 		
 			
 func _on_area_2d_mouse_entered() -> void:

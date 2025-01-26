@@ -12,6 +12,7 @@ var my_online_id = 0
 var my_pid = 0
 var num_players = 0
 var jacking_it = false
+var tenten = false
 var dutch = false
 var my_turn = false
 #Allows cards to be flipped during the first turn of the game
@@ -170,6 +171,16 @@ func card_checked() -> void:
 		flippable_initial = false
 		start_turns()
 
+#Called when a 10 is played
+func tennessee() -> void:
+	if !tenten:
+		tenten = true
+		turn_timer.paused = true
+	else:
+		tenten = false
+		turn_timer.paused = false
+		change_turns()
+
 #Called when a jack is played
 func jacking_off() -> void:
 	if !jacking_it:
@@ -179,6 +190,7 @@ func jacking_off() -> void:
 		jacking_it = false
 		turn_timer.paused = false
 		change_turns()
+		
 
 func _process(_delta) -> void:
 	# check if any players have run out of cards
