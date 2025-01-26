@@ -41,7 +41,7 @@ func connection_failed() -> void:
 	
 @rpc("any_peer", "call_local")
 func StartGame() -> void:
-	var scene = load("res://test_scene.tscn").instantiate()
+	var scene = load("res://Scenes/game.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
 	
@@ -121,4 +121,7 @@ func _on_close_button_down() -> void:
 	multiplayer.set_multiplayer_peer(null)
 	hosting = false
 	GameManager.playerCount = 0
-	pass # Replace with function body.
+
+
+func _on_back_button_down() -> void:
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

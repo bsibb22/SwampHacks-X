@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://502ny7i1k77s"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_coi0m"]
-[ext_resource type="Texture2D" uid="uid://dgytra0ucktiv" path="res://walter.jpeg" id="2_r36rc"]
+[ext_resource type="Texture2D" uid="uid://dgytra0ucktiv" path="res://Sprites/walter.jpeg" id="2_r36rc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_owfnj"]
 
