@@ -11,7 +11,6 @@ func _ready() -> void:
 # finish coding this after multiplayer is added
 func _input(event):
 	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		print("click tuah")
 		var top_card = main.pile.back()
 		if top_card == null:
 			return
@@ -38,7 +37,6 @@ func _input(event):
 	
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
-	print("gover")
 
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
