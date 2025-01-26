@@ -14,7 +14,7 @@ var num_players = 0
 var dutch = false
 var my_turn = false
 #Allows cards to be flipped during the first turn of the game
-var flippable_initial = false
+var flippable_initial = true
 var checked_cards = {}
 var turns_till_end = 9223372036854775807
 
@@ -24,7 +24,7 @@ func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
 		return CARDBACK
 	else:
-		return IMAGE_BANK[id]
+		return load("res://Sprites/CardSprites/" + str(id) + ".png")
 
 func shuffle_deck() -> void:
 	# Save the most recently played card
@@ -111,7 +111,6 @@ var pile = [] # face up pile of cards you can choose from
 var garbage = [] # cards that have been lost to time
 
 func _ready() -> void:
-	start_turns()
 	$"Control/Dutch Button".visible = false
 	# match local and online ids
 	var local_id = 0
@@ -153,19 +152,22 @@ func _ready() -> void:
 	#Let players check their cards
 	flippable_initial = true
 	#Dictionary tracks which players have checked their cards
-	for i in online_to_local_id:
+	print("siez of otli: " + str(online_to_local_id.size()))
+	for i in range(num_players):
 		checked_cards[i] = false
-	var all_cards_checked = false
-	#Block until all players have checked their cards
-	while !all_cards_checked:
-		var temp = true
-		for i in checked_cards:
-			if !checked_cards[i]:
-				temp = false
-		all_cards_checked = temp
+	print("Checked Cards Initialized")
 	
-	
-	start_turns()
+func card_checked() -> void:
+	print("Card checked")
+	var temp = true
+	for i in checked_cards:
+		print("Player: " + str(i) + ", Checked: " + str(checked_cards[i]))
+		if !checked_cards[i]:
+			temp = false
+			
+	if temp:
+		flippable_initial = false
+		start_turns()
 
 
 func _process(_delta) -> void:
