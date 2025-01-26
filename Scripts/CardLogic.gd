@@ -4,6 +4,7 @@ signal update
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/CardSprites/-1.png")
+var ending = preload("res://Objects/ending_menu.tscn")
 
 func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
@@ -105,4 +106,6 @@ func _ready() -> void:
 		print(players[i])
 
 func _process(_delta) -> void:
-	pass
+	if !global.game_state:
+		var ending_menu = ending.instantiate()
+		add_child(ending_menu)
