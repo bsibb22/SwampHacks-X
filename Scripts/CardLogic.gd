@@ -42,6 +42,11 @@ func deal_card(pid, num_cards) -> void:
 		if(deck.size() < 1):
 			shuffle_deck()
 	update.emit()
+	
+	
+func pull_from_pile(pid) -> void:
+	deck.push(pid.pop_back())
+	deal_card(pid, 1)
 
 
 # for these 2 functions it is assumed the hands will update later
@@ -88,9 +93,7 @@ func change_turns() -> void:
 		my_turn = true
 	else:
 		my_turn = false
-	if my_turn:
-		print("my turn")
-
+	print(str(turn_counter) + "'s turn")
 # ---- #
 
 var deck = [] # stack
@@ -116,7 +119,7 @@ func _ready() -> void:
 		print("pid " + str(local_id) + " matched to online id " + str(GameManager.Players[i].id))
 		local_id += 1
 		
-	num_players = local_id + 1
+	num_players = local_id
 	print(num_players)
 		
 	# Create the pile of cards
@@ -139,3 +142,11 @@ func _process(_delta) -> void:
 	if !game_state:
 		var ending_menu = ending.instantiate()
 		add_child(ending_menu)
+
+
+func _on_area_2d_mouse_entered() -> void:
+	pass # Replace with function body.
+
+
+func _on_area_2d_mouse_exited() -> void:
+	pass # Replace with function body.

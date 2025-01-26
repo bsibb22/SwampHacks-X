@@ -125,3 +125,6 @@ func _on_close_button_down() -> void:
 
 func _on_back_button_down() -> void:
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+	
+func get_player_name(id):
+	pass
