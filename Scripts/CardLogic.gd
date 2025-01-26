@@ -43,11 +43,6 @@ func deal_card(pid, num_cards) -> void:
 		if(deck.size() < 1):
 			shuffle_deck()
 	update.emit()
-	
-	
-func pull_from_pile(pid) -> void:
-	deck.push(pid.pop_back())
-	deal_card(pid, 1)
 
 
 # for these 2 functions it is assumed the hands will update later
@@ -95,7 +90,7 @@ func change_turns() -> void:
 		my_turn = true
 	else:
 		my_turn = false
-	print(str(turn_counter) + "'s turn")
+
 # ---- #
 
 var deck = [] # stack
@@ -109,19 +104,16 @@ func _ready() -> void:
 	# match local and online ids
 	var local_id = 0
 	my_online_id = multiplayer.get_unique_id()
-	print("my online id: " + str(my_online_id))
 	for i in GameManager.Players:
 		var online_id = GameManager.Players[i].id
 		local_to_online_id.push_back(online_id)
 		online_to_local_id[online_id] = local_id
 		if online_id == my_online_id:
 			my_pid = local_id
-			if local_id == 0:
-				my_turn = true
 		print("pid " + str(local_id) + " matched to online id " + str(GameManager.Players[i].id))
 		local_id += 1
 		
-	num_players = local_id
+	num_players = local_id + 1
 	print(num_players)
 		
 	# Create the pile of cards
@@ -141,25 +133,20 @@ func _ready() -> void:
 
 
 func _process(_delta) -> void:
+	#Ending the game needs to be filled out
 	if turns_till_end <= 0:
+		print("Hello")
 		var ending_menu = ending.instantiate()
 		add_child(ending_menu)
 
 
 
-
+#This is broken
 func _on_dutch_button_button_down() -> void:
 	print("Dutch button pressed")
 	if my_turn and !dutch:
 		turns_till_end = GameManager.Players.size()
+		print("Turns till end: " + str(turns_till_end))
 		dutch = true
 		change_turns()
-	pass # Replace with function body.
-
-
-func _on_area_2d_mouse_entered() -> void:
-	pass # Replace with function body.
-
-
-func _on_area_2d_mouse_exited() -> void:
 	pass # Replace with function body.
