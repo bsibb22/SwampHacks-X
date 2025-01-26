@@ -1,17 +1,15 @@
 extends Node2D
 
-var card_scene = preload("res://Objects/card.tscn")
-
-@export var pid: int = 0
-var is_turn: bool = false
+@onready var card_scene = preload("res://Objects/card.tscn")
+@onready var my_pid = get_parent().my_pid
 
 func update_hand():
 	for c in get_children():
 		c.free()
 	
-	for i in range(get_parent().players[global.pid].size()):
-		var c = get_parent().players[global.pid][i]
-		c.owner = global.pid
+	for i in range(get_parent().players[my_pid].size()):
+		var c = get_parent().players[my_pid][i]
+		c.owner = my_pid
 		var cs = card_scene.instantiate()
 		cs.data = c
 		add_child(cs)

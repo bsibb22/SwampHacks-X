@@ -11,8 +11,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _input(event) -> void:
-	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		get_parent().deal_card(global.pid, 1)
+	if get_parent().my_turn and hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		get_parent().deal_card(get_parent().my_pid, 1)
 
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
