@@ -41,9 +41,10 @@ func connection_failed() -> void:
 	
 @rpc("any_peer", "call_local")
 func StartGame() -> void:
-	var scene = load("res://Scenes/game.tscn").instantiate()
+	'''var scene = load("res://Scenes/game.tscn").instantiate()
 	get_tree().root.add_child(scene)
-	self.hide()
+	self.hide()'''
+	get_tree().change_scene_to_file("res://Scenes/game.tscn")
 	
 @rpc("any_peer")
 func SendPlayerInformation(name, id):
@@ -107,7 +108,6 @@ func _on_start_button_down() -> void:
 	for i in GameManager.Players:
 		print("Name: " + GameManager.Players[i].name + " ID: " + str(GameManager.Players[i].id))
 	StartGame.rpc()
-	pass # Replace with function body.
 
 
 func _on_close_button_down() -> void:

@@ -21,6 +21,7 @@ script = ExtResource("1_3xefb")
 position = Vector2(0.00012207, 0.000244141)
 scale = Vector2(23.9375, 16.7892)
 texture = ExtResource("2_idmhq")
+metadata/_edit_lock_ = true
 
 [node name="PokerTableSketch" type="Sprite2D" parent="."]
 position = Vector2(0.00012207, 0.00012207)

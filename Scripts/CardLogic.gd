@@ -4,6 +4,7 @@ signal update
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/CardSprites/-1.png")
+var turn_timer: Timer = Timer.new()
 var ending = preload("res://Objects/ending_menu.tscn")
 var local_to_online_id = []
 var online_to_local_id = {}
@@ -72,8 +73,6 @@ var turn_counter: int = 0
 var turn_seconds: int = 1
 
 func start_turns() -> void:
-	var turn_timer: Timer = Timer.new()
-	
 	add_child(turn_timer)
 	turn_timer.timeout.connect(change_turns)
 	turn_timer.wait_time = turn_seconds
@@ -81,6 +80,7 @@ func start_turns() -> void:
 	turn_timer.start()
 
 func change_turns() -> void:
+	start_turns()
 	print("turns changed!")
 	turn_counter += 1
 	if dutch:
@@ -140,7 +140,7 @@ func _process(_delta) -> void:
 	#Ending the game needs to be filled out
 	if turns_till_end == 0:
 		print("Game Over")
-		$"@Timer@2".stop()
+		turn_timer.stop()
 		var winner_pid = 20
 		var winner_score = 9223372036854775807
 		for i in range(num_players):
