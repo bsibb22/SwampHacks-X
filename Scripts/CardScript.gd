@@ -18,7 +18,7 @@ func _input(event):
 		var top_card = main.pile.back()
 		if top_card == null:
 			return
-		var parent_pid = get_parent().pid
+		var parent_pid = get_parent().my_pid
 		if parent_pid != my_pid:
 			# Card is opponent's card
 			if data.card_value == top_card.card_value:
@@ -40,12 +40,12 @@ func _input(event):
 				main.remove_card(my_pid, data, true)
 	#Handles Flipping
 	elif hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
-		var parent_pid = get_parent().pid
+		var parent_pid = get_parent().my_pid
 		#Will be used for face cards
 		if parent_pid != my_pid:
 			return
 		#Only works at the beginning of the game
-		elif main.flippable_inital and !previously_flipped:
+		elif main.flippable_initial and !previously_flipped:
 			flip()
 			previously_flipped = true
 			var timer : Timer = Timer.new()

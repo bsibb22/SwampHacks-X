@@ -28,3 +28,4 @@ func flip_init() -> void:
 	#on this player
 	if num_checked_cards >= 2:
 		get_parent().checked_cards[my_pid] = true
+		get_parent().card_checked()
