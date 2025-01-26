@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://d6o830mdx5j3"]
+
+[ext_resource type="Script" path="res://Scripts/join_menu_2.gd" id="1_ao284"]
+[ext_resource type="Texture2D" uid="uid://crt8ctkh0ww5" path="res://Sprites/Menu Screens/Joining a Room_REF.png" id="2_mpfey"]
+
+[node name="join_menu_2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ao284")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(956.625, 539.932)
+scale = Vector2(1.01081, 1.01864)
+texture = ExtResource("2_mpfey")
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.679
+anchor_top = 0.73
+anchor_right = 0.78
+anchor_bottom = 0.836
+offset_left = -0.680054
+offset_top = -20.4
+offset_right = -0.600098
+offset_bottom = 0.119995
+flat = true
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.183
+anchor_top = 0.169
+anchor_right = 0.392
+anchor_bottom = 0.342
+offset_left = -0.360016
+offset_top = -0.52002
+offset_right = -0.640015
+offset_bottom = -0.360016
+flat = true
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

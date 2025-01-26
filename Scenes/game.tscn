@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://brpwuwsr5kvqp"]
+[gd_scene load_steps=11 format=3 uid="uid://brpwuwsr5kvqp"]
 
 [ext_resource type="Script" path="res://Scripts/CardLogic.gd" id="1_3xefb"]
 [ext_resource type="Texture2D" uid="uid://bll58tk6aa0ex" path="res://Sprites/background.tres" id="2_idmhq"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="4_80nag"]
 [ext_resource type="Texture2D" uid="uid://cgir2eaetmw0y" path="res://Sprites/CardSprites/-1.png" id="5_5dtl7"]
 [ext_resource type="Script" path="res://Scripts/Pile.gd" id="6_a7jie"]
-[ext_resource type="PackedScene" uid="uid://bm2ihxhwmq4k3" path="res://Objects/player.tscn" id="6_hto42"]
 [ext_resource type="Texture2D" uid="uid://ci1r1a7ovuydk" path="res://Sprites/CardSprites/0.png" id="7_jps7h"]
 [ext_resource type="Texture2D" uid="uid://ctfkae1ppq2xh" path="res://Sprites/Menu Screens/Dutch_Button.png" id="9_mvx05"]
 
@@ -57,9 +56,6 @@ texture = ExtResource("7_jps7h")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pile/Sprite2D/Area2D"]
 position = Vector2(0, -5.16574e-06)
 shape = SubResource("RectangleShape2D_5jksx")
-
-[node name="Player" parent="." instance=ExtResource("6_hto42")]
-position = Vector2(0, 245)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

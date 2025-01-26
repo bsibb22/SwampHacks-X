@@ -31,7 +31,7 @@ func _ready() -> void:
 		
 # finish coding this after multiplayer is added
 func _input(event):
-	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and !main.flippable_initial:
+	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		#main.remove_card(parent_pid, data, true)
 		if main.selected_card_to_swap == null:
 			if main.pile.size() > 0:
@@ -92,7 +92,7 @@ func _input(event):
 				main.remove_card(my_pid, data, true)'''
 	#Handles Flipping
 	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
-		var parent_pid = get_parent().my_pid
+		var parent_pid = data.owner
 		#Will be used for face cards
 		if parent_pid != my_pid:
 			#Flip opponents card when jack is flipped

@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhrox15k2ukfa"]
+
+[ext_resource type="Script" path="res://Scripts/host_room.gd" id="1_2kcdc"]
+[ext_resource type="Texture2D" uid="uid://bppady4o42tob" path="res://Sprites/Menu Screens/Hosting a Room_REF.png" id="2_6bngn"]
+
+[node name="HostMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2kcdc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(956.625, 539.932)
+scale = Vector2(1.01081, 1.01864)
+texture = ExtResource("2_6bngn")
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.615
+anchor_top = 0.714
+anchor_right = 0.778
+anchor_bottom = 0.838
+offset_left = 0.199951
+offset_top = -21.1201
+offset_right = -26.7601
+offset_bottom = -0.0400391
+flat = true
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.206
+anchor_top = 0.144
+anchor_right = 0.349
+anchor_bottom = 0.294
+offset_left = -24.52
+offset_top = 0.479996
+offset_right = -0.0800171
+offset_bottom = -0.519989
+flat = true
+
+[connection signal="pressed" from="Start" to="." method="_on_start_button_down"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

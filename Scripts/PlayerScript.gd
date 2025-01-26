@@ -18,7 +18,7 @@ func update_hand():
 		add_child(cs)
 
 	for i in range(get_child_count()):
-		get_child(i).position = Vector2(-180 + floor(360 / (get_child_count())) * i, 0)
+		get_child(i).position = Vector2(112.5 - floor(300 / 4) * (i % 4), 100 * floor(i / 4))
 
 func _process(_delta: float) -> void:
 	# print(selection_state)

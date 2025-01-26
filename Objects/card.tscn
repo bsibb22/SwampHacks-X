@@ -13,7 +13,7 @@ owner = 0
 load_path = "res://.godot/imported/-1.png-64ef56ed79f081fd125397939ed10691.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhorj"]
-size = Vector2(813.333, 1186.67)
+size = Vector2(1328.16, 1966.59)
 
 [node name="Card" type="Node2D"]
 scale = Vector2(0.15, 0.15)
@@ -21,13 +21,15 @@ script = ExtResource("1_s2o42")
 data = SubResource("Resource_wp4ei")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.75, 0.75)
+position = Vector2(-11.6667, 51.6667)
+scale = Vector2(0.732843, 0.698333)
 texture = SubResource("CompressedTexture2D_84ijw")
 
 [node name="Area2D" type="Area2D" parent="Sprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
-position = Vector2(-7.54992e-06, 2.54313e-05)
+position = Vector2(-11.3713, -7.15994)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bhorj")
 
 [connection signal="mouse_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_mouse_entered"]

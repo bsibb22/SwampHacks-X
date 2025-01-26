@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2fdo5ttyee2w"]
+
+[ext_resource type="Script" path="res://Scripts/join_menu_1.gd" id="1_sj4ds"]
+[ext_resource type="Texture2D" uid="uid://xedmjhia4hu8" path="res://Sprites/Menu Screens/Joining a Room IP_REF.png" id="2_t0fsn"]
+
+[node name="join_menu_1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sj4ds")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(956.625, 539.932)
+scale = Vector2(1.01081, 1.01864)
+texture = ExtResource("2_t0fsn")
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.679
+anchor_top = 0.73
+anchor_right = 0.78
+anchor_bottom = 0.836
+offset_left = -0.680054
+offset_top = -20.4
+offset_right = -0.600098
+offset_bottom = 0.119995
+flat = true
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.206
+anchor_top = 0.152
+anchor_right = 0.399
+anchor_bottom = 0.314
+offset_left = -20.52
+offset_top = -0.160004
+offset_right = -0.0800171
+offset_bottom = -0.120026
+flat = true
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 492.0
+offset_right = 1412.0
+offset_bottom = 572.0
+
+[connection signal="pressed" from="Play" to="." method="_on_join_button_down"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

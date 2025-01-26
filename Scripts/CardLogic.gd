@@ -6,7 +6,8 @@ signal send_data
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/CardSprites/-1.png")
-var turn_timer: Timer = Timer.new()
+var turn_timer
+var timer_paused
 var ending = preload("res://Objects/ending_menu.tscn")
 var player = preload("res://Objects/player.tscn")
 var local_to_online_id = []
@@ -85,16 +86,7 @@ func swap_card(pid_1, pid_2, card_1, card_2) -> void:
 var turn_counter: int = 0
 var turn_seconds: int = 15
 
-func start_turns() -> void:
-	add_child(turn_timer)
-	turn_timer.timeout.connect(change_turns)
-	turn_timer.wait_time = turn_seconds
-	turn_timer.autostart = true
-	turn_timer.start()
-
 func change_turns() -> void:
-	# start_turns()
-	# print("turns changed!")
 	turn_counter += 1
 	if dutch:
 		turns_till_end -= 1
@@ -107,7 +99,10 @@ func change_turns() -> void:
 	else:
 		my_turn = false
 		$"Dutch Button".visible = false
-		
+	
+	if my_pid == 0:
+		turn_timer = 15
+	
 	if players[turn_counter].size() <= 0:
 		change_turns()
 
@@ -136,11 +131,13 @@ func _ready() -> void:
 	
 	num_players = local_id
 	
-	var player_angle = (my_pid * (2.0 * PI / float(num_players)))
+	# var player_angle = (my_pid * (2.0 * PI / float(num_players)))
 	for i in range(num_players):
 		players.push_back([])
+		var player_angle = float(abs(i - my_pid)) * (2.0 * PI / float(num_players))
+
 		var p = player.instantiate()
-		p.position = Vector2(cos(player_angle) * float(325), sin(player_angle) * float(325))
+		p.position = Vector2(cos(player_angle) * float(300), sin(player_angle) * float(300))
 		p.rotation = (player_angle + 0.5 * PI)
 		add_child(p)
 		
@@ -170,7 +167,6 @@ func _ready() -> void:
 		
 	send_data.emit()
 	update.emit()
-	start_turns()
 		
 	#Let players check their cards
 	flippable_initial = true
@@ -189,32 +185,33 @@ func card_checked() -> void:
 			
 	if temp:
 		flippable_initial = false
-		start_turns()
 
 #Called when a 10 is played
 func tennessee() -> void:
 	if !tenten:
 		tenten = true
-		turn_timer.paused = true
+		timer_paused = true
 	else:
 		tenten = false
-		turn_timer.paused = false
+		timer_paused = false
 		change_turns()
 
 #Called when a jack is played
 func jacking_off() -> void:
 	if !jacking_it:
 		jacking_it = true
-		turn_timer.paused = true
+		timer_paused = true
 	else:
 		jacking_it = false
-		turn_timer.paused = false
+		timer_paused = false
 		change_turns()
 		
 
 func _process(_delta) -> void:
 	# check if any players have run out of cards
 	if game_state:
+		if !timer_paused:
+			turn_timer -= _delta
 		for i in players:
 			if i.size() <= 0:
 				_on_dutch_button_button_down()
@@ -263,9 +260,11 @@ func receive(data: Array):
 	var encoded_pile = data[2]
 	var encoded_garbage = data[3]
 	dutch = data[4]
-	# turn_timer = data[5]
+	turn_timer = data[5]
 	turn_counter = data[6]
 	game_state = data[7]
+	timer_paused = data[8]
+	checked_cards = data[9]
 	
 	# decode deck
 	var temp_deck = []
@@ -342,7 +341,9 @@ func send():
 		dutch, # fine
 		turn_timer, # big issues
 		turn_counter, # fine
-		game_state # fine
+		game_state, # fine
+		timer_paused,
+		checked_cards
 	]
 	
 	rpc("receive", data)
