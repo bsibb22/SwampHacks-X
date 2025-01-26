@@ -140,7 +140,7 @@ func _ready() -> void:
 	for i in range(num_players):
 		players.push_back([])
 		var p = player.instantiate()
-		p.position = Vector2(cos(player_angle) * float(500), sin(player_angle) * float(500))
+		p.position = Vector2(cos(player_angle) * float(325), sin(player_angle) * float(325))
 		p.rotation = (player_angle + 0.5 * PI)
 		add_child(p)
 		

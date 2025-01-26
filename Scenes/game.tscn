@@ -4,16 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://bll58tk6aa0ex" path="res://Sprites/background.tres" id="2_idmhq"]
 [ext_resource type="Texture2D" uid="uid://di12ch2mlm8ti" path="res://Sprites/PokerTable_Sketch.png" id="3_ypst2"]
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="4_80nag"]
+[ext_resource type="Texture2D" uid="uid://cgir2eaetmw0y" path="res://Sprites/CardSprites/-1.png" id="5_5dtl7"]
 [ext_resource type="Script" path="res://Scripts/Pile.gd" id="6_a7jie"]
 [ext_resource type="PackedScene" uid="uid://bm2ihxhwmq4k3" path="res://Objects/player.tscn" id="6_hto42"]
 [ext_resource type="Texture2D" uid="uid://ci1r1a7ovuydk" path="res://Sprites/CardSprites/0.png" id="7_jps7h"]
 [ext_resource type="Texture2D" uid="uid://ctfkae1ppq2xh" path="res://Sprites/Menu Screens/Dutch_Button.png" id="9_mvx05"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_84ijw"]
-load_path = "res://.godot/imported/-1.png-64ef56ed79f081fd125397939ed10691.ctex"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4eqw4"]
-size = Vector2(1305.26, 1957.89)
+size = Vector2(806.667, 1226.67)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5jksx"]
 size = Vector2(800, 1186.67)
@@ -37,13 +35,13 @@ position = Vector2(-150, 0)
 script = ExtResource("4_80nag")
 
 [node name="Sprite2D" type="Sprite2D" parent="Deck"]
-scale = Vector2(0.095, 0.095)
-texture = SubResource("CompressedTexture2D_84ijw")
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("5_5dtl7")
 
 [node name="Area2D" type="Area2D" parent="Deck/Sprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Deck/Sprite2D/Area2D"]
-position = Vector2(-21.0526, 4.01547e-05)
+position = Vector2(-3.33331, -1.27157e-05)
 shape = SubResource("RectangleShape2D_4eqw4")
 
 [node name="Pile" type="Node2D" parent="."]
