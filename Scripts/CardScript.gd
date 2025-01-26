@@ -3,13 +3,15 @@ extends Node2D
 @export var data: CardData
 @onready var sprite = $Sprite2D
 @onready var main = get_node("../../")
+@onready var hovering = false
 
 func _ready() -> void:
 	sprite.texture = main.load_img(-1)
 		
 # finish coding this after multiplayer is added
 func _input(event):
-	'''if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print("click tuah")
 		var top_card = main.pile.back()
 		if top_card == null:
 			return
@@ -32,5 +34,11 @@ func _input(event):
 				main.remove_card(global.pid, data, false)
 				main.deal_card(global.pid, 2)
 			else:
-				main.remove_card(global.pid, data, true)'''
-	pass
+				main.remove_card(global.pid, data, true)
+	
+func _on_area_2d_mouse_entered() -> void:
+	hovering = true
+	print("gover")
+
+func _on_area_2d_mouse_exited() -> void:
+	hovering = false
