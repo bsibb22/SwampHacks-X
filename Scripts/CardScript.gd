@@ -29,13 +29,19 @@ func _ready() -> void:
 		
 # finish coding this after multiplayer is added
 func _input(event):
-	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and !main.flippable_initial:
 		#main.remove_card(parent_pid, data, true)
 		if main.selected_card_to_swap == null:
 			if main.pile.size() > 0:
 				var top_card: CardData = main.pile.back()
 				main.players[my_pid].erase(data)
 				main.pile.push_back(data)
+				
+				if data.card_value == 10:
+					return
+				#If a Jack is played
+				elif data.card_value == 11:
+					main.jacking_off()
 				
 				# the card belongs to you!
 				if data.owner == my_pid:
@@ -81,25 +87,32 @@ func _input(event):
 		var parent_pid = get_parent().my_pid
 		#Will be used for face cards
 		if parent_pid != my_pid:
-			return
+			#Flip opponents card when jack is flipped
+			if main.jacking_it:
+				meta_flip()
+				main.jacking_off()
 		#Only works at the beginning of the game
 		elif main.flippable_initial and !previously_flipped:
-			flip()
-			previously_flipped = true
-			var timer : Timer = Timer.new()
-			timer.timeout.connect(flip)
-			timer.wait_time = 3
-			timer.one_shot = true
-			timer.autostart = true
-			timer.start()
-			add_child(timer)
+			meta_flip()
 			get_parent()	.flip_init()
+		
 			
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
 
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
+	
+func meta_flip() -> void:
+	flip()
+	previously_flipped = true
+	var timer : Timer = Timer.new()
+	timer.timeout.connect(flip)
+	timer.wait_time = 3
+	timer.one_shot = true
+	timer.autostart = true
+	timer.start()
+	add_child(timer)
 	
 #Flips the card by changing the sprite
 func flip() -> void:
