@@ -135,7 +135,7 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	#Ending the game needs to be filled out
 	if turns_till_end <= 0:
-		print("Hello")
+		print("Game Over")
 		var ending_menu = ending.instantiate()
 		add_child(ending_menu)
 
@@ -145,8 +145,8 @@ func _process(_delta) -> void:
 func _on_dutch_button_button_down() -> void:
 	print("Dutch button pressed")
 	if my_turn and !dutch:
-		turns_till_end = GameManager.Players.size()
 		print("Turns till end: " + str(turns_till_end))
 		dutch = true
 		change_turns()
+		turns_till_end = GameManager.Players.size()
 	pass # Replace with function body.
