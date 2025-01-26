@@ -10,8 +10,9 @@ var online_to_local_id = {}
 var my_online_id = 0
 var my_pid = 0
 var num_players = 0
-var game_state = false
+var dutch = false
 var my_turn = false
+var turns_till_end = 9223372036854775807
 
 func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
@@ -82,6 +83,7 @@ func start_turns() -> void:
 func change_turns() -> void:
 	print("turns changed!")
 	turn_counter += 1
+	turns_till_end -= 1
 	if turn_counter >= num_players:
 		turn_counter = 0
 	if turn_counter == my_pid:
@@ -131,6 +133,17 @@ func _ready() -> void:
 
 
 func _process(_delta) -> void:
-	if !game_state:
+	if turns_till_end <= 0:
 		var ending_menu = ending.instantiate()
 		add_child(ending_menu)
+
+
+
+
+func _on_dutch_button_button_down() -> void:
+	print("Dutch button pressed")
+	if my_turn and !dutch:
+		turns_till_end = GameManager.Players.size()
+		dutch = true
+		change_turns()
+	pass # Replace with function body.

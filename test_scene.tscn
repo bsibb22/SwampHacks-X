@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlcm5q6ji4ecy"]
+
+[ext_resource type="Script" path="res://Scripts/SceneManager.gd" id="1_o2twf"]
+[ext_resource type="PackedScene" uid="uid://cufat6u7g5cf5" path="res://player.tscn" id="2_id8ck"]
+[ext_resource type="Texture2D" uid="uid://dm2v1tw2t5omt" path="res://Sprites/wp8465642.png" id="3_ehblh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bua2i"]
+size = Vector2(260.051, 20)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(-48, -36)
+script = ExtResource("1_o2twf")
+PlayerScene = ExtResource("2_id8ck")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1437.5, 793)
+scale = Vector2(15.87, 15.87)
+shape = SubResource("RectangleShape2D_bua2i")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(2589, 753)
+scale = Vector2(2.63827, 0.167917)
+texture = ExtResource("3_ehblh")
+
+[node name="0" type="Node2D" parent="." groups=["PlayerSpawnPoint"]]
+position = Vector2(990, 490)
+
+[node name="1" type="Node2D" parent="." groups=["PlayerSpawnPoint"]]
+position = Vector2(178, 502)
