@@ -6,6 +6,9 @@ extends Node2D
 @onready var hovering = false
 @onready var my_pid = main.my_pid
 
+var previously_flipped = false
+var flipped = false
+
 var z: float = 0.15
 var c: float = 1.0
 func _process(_delta: float) -> void:
@@ -74,7 +77,7 @@ func _input(event):
 			else:
 				main.remove_card(my_pid, data, true)'''
 	#Handles Flipping
-	elif hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
 		var parent_pid = get_parent().my_pid
 		#Will be used for face cards
 		if parent_pid != my_pid:
