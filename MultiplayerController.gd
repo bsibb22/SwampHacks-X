@@ -1,10 +1,10 @@
 extends Control
 
-@export var Address = "127.0.0.1"
 @export var port = 8910
 var peer
 var joined = false
 var hosting = false
+const maxPlayers = 8
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -61,7 +61,7 @@ func SendPlayerInformation(name, id):
 func _on_host_button_down() -> void:
 	if !hosting:
 		peer = ENetMultiplayerPeer.new()
-		var error = peer.create_server(port, 8)
+		var error = peer.create_server(port, maxPlayers)
 		if error != OK:
 			print("Cannot host: " + str(error))
 			return
