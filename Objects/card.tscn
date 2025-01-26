@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgbnggqg8d4l2"]
+[gd_scene load_steps=6 format=3 uid="uid://bgbnggqg8d4l2"]
 
 [ext_resource type="Script" path="res://Scripts/CardScript.gd" id="1_s2o42"]
-[ext_resource type="Texture2D" uid="uid://ci1r1a7ovuydk" path="res://Sprites/CardSprites/0.png" id="2_2u3yk"]
 [ext_resource type="Script" path="res://Scripts/CardData.gd" id="2_i3fmq"]
 
 [sub_resource type="Resource" id="Resource_wp4ei"]
@@ -10,13 +9,11 @@ card_value = 1
 id = 0
 owner = 0
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_84ijw"]
+load_path = "res://.godot/imported/-1.png-64ef56ed79f081fd125397939ed10691.ctex"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhorj"]
 size = Vector2(813.333, 1186.67)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jqkl4"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="Card" type="Node2D"]
 scale = Vector2(0.15, 0.15)
@@ -24,16 +21,14 @@ script = ExtResource("1_s2o42")
 data = SubResource("Resource_wp4ei")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_2u3yk")
+scale = Vector2(0.75, 0.75)
+texture = SubResource("CompressedTexture2D_84ijw")
 
 [node name="Area2D" type="Area2D" parent="Sprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
 position = Vector2(-7.54992e-06, 2.54313e-05)
 shape = SubResource("RectangleShape2D_bhorj")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_jqkl4")
 
 [connection signal="mouse_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Sprite2D/Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -83,7 +83,7 @@ func swap_card(pid_1, pid_2, card_1, card_2) -> void:
 
 # TURN LOGIC
 var turn_counter: int = 0
-var turn_seconds: int = 1
+var turn_seconds: int = 15
 
 func start_turns() -> void:
 	add_child(turn_timer)
@@ -94,7 +94,7 @@ func start_turns() -> void:
 
 func change_turns() -> void:
 	# start_turns()
-	print("turns changed!")
+	# print("turns changed!")
 	turn_counter += 1
 	if dutch:
 		turns_till_end -= 1
@@ -103,10 +103,10 @@ func change_turns() -> void:
 	if turn_counter == my_pid:
 		my_turn = true
 		if !dutch:
-			$"Control/Dutch Button".visible = true
+			$"Dutch Button".visible = true
 	else:
 		my_turn = false
-		$"Control/Dutch Button".visible = false
+		$"Dutch Button".visible = false
 		
 	if players[turn_counter].size() <= 0:
 		change_turns()
@@ -120,7 +120,7 @@ var garbage = [] # cards that have been lost to time
 
 func _ready() -> void:
 	send_data.connect(send)
-	$"Control/Dutch Button".visible = false
+	$"Dutch Button".visible = false
 	
 	# match local and online ids
 	var local_id = 0
@@ -161,7 +161,7 @@ func _ready() -> void:
 		# Deal the cards
 		for i in range(num_players):
 			deal_card(i, 4)
-			print("player " + str(i) + "'s cards: ")
+			# print("player " + str(i) + "'s cards: ")
 			for j in players[i]:
 				print(j.card_value)
 				
@@ -175,7 +175,6 @@ func _ready() -> void:
 	#Let players check their cards
 	flippable_initial = true
 	#Dictionary tracks which players have checked their cards
-	print("siez of otli: " + str(online_to_local_id.size()))
 	for i in range(num_players):
 		checked_cards[i] = false
 	print("Checked Cards Initialized")
@@ -291,15 +290,26 @@ func receive(data: Array):
 	
 	# decode players
 	var temp_players = []
-	for i in range(encoded_players.size()):
+	for i in range(num_players):
 		temp_players.push_back([])
-	for i in range(encoded_players.size()):
-		for j in i:
+	for i in range(num_players):
+		for j in encoded_players[i]:
 			var c: CardData = all_cards[j]
 			temp_players[i].push_back(c)
 	players = temp_players
+	
+	print("players array: ", players) 
+	print("temp players array: ", temp_players) 
 
 	update.emit()
+	
+	print("my_pid: " + str(my_pid))
+	for i in range(0, num_players):
+		print("player " + str(i) + "'s deck")
+		for j in players[i]:
+			print(j.id)
+		
+	
 	
 
 func send():
@@ -317,12 +327,12 @@ func send():
 	for i in garbage:
 		encodedGarbage.push_back(i.id)
 		
-	for i in players:
+	for i in range(num_players):
 		encodedPlayers.push_back([])
 		
-	for i in players:
-		for j in i:
-			encodedPlayers.push_back(j.id)
+	for i in range(num_players):
+		for j in players[i]:
+			encodedPlayers[i].push_back(j.id)
 		
 	var data = [
 		encodedDeck, # fine ?
@@ -334,4 +344,5 @@ func send():
 		turn_counter, # fine
 		game_state # fine
 	]
+	
 	rpc("receive", data)

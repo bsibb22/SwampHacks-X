@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1io6pdet5xis"]
+[gd_scene load_steps=3 format=3 uid="uid://c1io6pdet5xis"]
 
 [ext_resource type="Script" path="res://Scripts/ending_menu.gd" id="1_01mbv"]
+[ext_resource type="Texture2D" uid="uid://bav5g5f8ifg02" path="res://Sprites/Menu Screens/Win Screen_REF.png" id="2_i0ccy"]
 
 [node name="EndingMenu" type="Control"]
 layout_mode = 3
@@ -17,22 +18,33 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_01mbv")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 1910.0
-offset_bottom = 1081.0
+[node name="WinScreenRef" type="Sprite2D" parent="."]
+position = Vector2(943, 535)
+texture = ExtResource("2_i0ccy")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Play again" type="Button" parent="."]
 layout_mode = 2
-alignment = 1
+anchor_left = 0.45
+anchor_top = 0.629
+anchor_right = 0.655
+anchor_bottom = 0.794
+offset_left = -6.10352e-05
+offset_top = -23.32
+offset_right = 0.399902
+offset_bottom = 0.47998
+flat = true
 
-[node name="Play again" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Main Menu" type="Button" parent="."]
 layout_mode = 2
-text = "Play Again"
+anchor_left = 0.322
+anchor_top = 0.196
+anchor_right = 0.466
+anchor_bottom = 0.285
+offset_left = 0.759949
+offset_top = 0.319992
+offset_right = -0.720032
+offset_bottom = 0.199982
+flat = true
 
-[node name="Main Menu" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Main Menu"
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play again" to="." method="_on_play_again_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Main Menu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Play again" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="Main Menu" to="." method="_on_main_menu_pressed"]
