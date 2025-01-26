@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ryvvpd6h2syn"]
+[gd_scene load_steps=2 format=3 uid="uid://bidt6k4vgmer"]
 
-[ext_resource type="Script" path="res://Scripts/MultiplayerController.gd" id="1_3ck5s"]
+[ext_resource type="Script" path="res://MultiplayerController.gd" id="1_3ck5s"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -31,7 +31,7 @@ text = "Join"
 layout_mode = 0
 offset_left = 375.0
 offset_top = 299.0
-offset_right = 584.0
+offset_right = 570.0
 offset_bottom = 371.0
 text = "Start"
 
@@ -87,16 +87,7 @@ offset_top = 479.0
 offset_right = 422.0
 offset_bottom = 502.0
 
-[node name="Back tuah" type="Button" parent="."]
-layout_mode = 0
-offset_left = 609.0
-offset_top = 299.0
-offset_right = 814.0
-offset_bottom = 371.0
-text = "Back to Menu"
-
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Close" to="." method="_on_close_button_down"]
-[connection signal="button_down" from="Back tuah" to="." method="_on_back_button_down"]
