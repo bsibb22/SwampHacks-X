@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="4_80nag"]
 [ext_resource type="Texture2D" uid="uid://bo3tp5bw4l543" path="res://Sprites/CardSprites/-1.png" id="5_5dtl7"]
 [ext_resource type="Script" path="res://Scripts/Pile.gd" id="6_a7jie"]
-[ext_resource type="PackedScene" uid="uid://dfuy1mgqyj65a" path="res://Objects/player.tscn" id="6_hto42"]
+[ext_resource type="PackedScene" uid="uid://bm2ihxhwmq4k3" path="res://Objects/player.tscn" id="6_hto42"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4eqw4"]
 size = Vector2(220.774, 323.229)

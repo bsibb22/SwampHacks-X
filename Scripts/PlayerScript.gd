@@ -21,7 +21,8 @@ func update_hand():
 		get_child(i).position = Vector2(-180 + floor(360 / (get_child_count())) * i, 0)
 
 func _process(_delta: float) -> void:
-	print(selection_state)
+	# print(selection_state)
+	pass
 
 func _ready() -> void:
 	get_parent().update.connect(update_hand)

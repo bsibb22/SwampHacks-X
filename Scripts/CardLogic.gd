@@ -2,11 +2,13 @@ extends Node2D
 
 signal update
 signal _flippity
+signal send_data
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/CardSprites/-1.png")
 var turn_timer: Timer = Timer.new()
 var ending = preload("res://Objects/ending_menu.tscn")
+var player = preload("res://Objects/player.tscn")
 var local_to_online_id = []
 var online_to_local_id = {}
 var my_online_id = 0
@@ -21,6 +23,8 @@ var my_turn = false
 var flippable_initial = true
 var checked_cards = {}
 var turns_till_end = 9223372036854775807
+var game_state = false
+var all_cards = []
 
 var selected_card_to_swap = null
 
@@ -115,7 +119,9 @@ var pile = [] # face up pile of cards you can choose from
 var garbage = [] # cards that have been lost to time
 
 func _ready() -> void:
+	send_data.connect(send)
 	$"Control/Dutch Button".visible = false
+	
 	# match local and online ids
 	var local_id = 0
 	my_online_id = multiplayer.get_unique_id()
@@ -127,31 +133,44 @@ func _ready() -> void:
 			my_pid = local_id
 		print("pid " + str(local_id) + " matched to online id " + str(GameManager.Players[i].id))
 		local_id += 1
-		
+	
 	num_players = local_id
-	print(num_players)
+	
+	var player_angle = (my_pid * (2.0 * PI / float(num_players)))
+	for i in range(num_players):
+		players.push_back([])
+		var p = player.instantiate()
+		p.position = Vector2(cos(player_angle) * float(500), sin(player_angle) * float(500))
+		p.rotation = (player_angle + 0.5 * PI)
+		add_child(p)
 		
+	print(str(num_players) + " player game")
+	
 	# Create the pile of cards
 	for i in range(54):
 		# make new card with id i and owner pile
 		var c: CardData = CardData.new(i) # change to i after card images are added
 		IMAGE_BANK.push_back(load("res://Sprites/CardSprites/" + str(i) + ".png"))
 		deck.push_back(c)
-
-	# Shuffle the deck
-	deck.shuffle()
+		all_cards.push_back(c)
 	
-	# Deal the cards
-	for i in range(num_players):
-		players.push_back([])
-		deal_card(i, 4)
-		print("player " + str(i) + "'s cards: ")
-		for j in players[i]:
-			print(j.card_value)
-			
-	print(deck.back().card_value)
-	pile.push_back(deck.pop_back())
+	if my_pid == 0:
+		# Shuffle the deck
+		deck.shuffle()
+		
+		# Deal the cards
+		for i in range(num_players):
+			deal_card(i, 4)
+			print("player " + str(i) + "'s cards: ")
+			for j in players[i]:
+				print(j.card_value)
+				
+		# print(deck.back().card_value)
+		pile.push_back(deck.pop_back())
+		
+	send_data.emit()
 	update.emit()
+	start_turns()
 		
 	#Let players check their cards
 	flippable_initial = true
@@ -196,12 +215,13 @@ func jacking_off() -> void:
 
 func _process(_delta) -> void:
 	# check if any players have run out of cards
-	for i in players:
-		if i.size() <= 0:
-			_on_dutch_button_button_down()
-	
-	if turns_till_end <= 0 and i_cant_take_it_anymore:
-		end_this_shit()
+	if game_state:
+		for i in players:
+			if i.size() <= 0:
+				_on_dutch_button_button_down()
+		
+		if turns_till_end <= 0 and i_cant_take_it_anymore:
+			end_this_shit()
 
 func end_this_shit() -> void:
 	_flippity.emit()
@@ -221,7 +241,7 @@ func end_this_shit() -> void:
 	if my_pid == winner_pid:
 		print("winner winner chicken dinner")
 	else:
-		print("fuck you")
+		print("you lose")
 	turns_till_end -= 1
 	var ending_menu = ending.instantiate()
 	add_child(ending_menu)
@@ -233,3 +253,85 @@ func _on_dutch_button_button_down() -> void:
 	print("Turns till end: " + str(turns_till_end))
 	dutch = true
 	change_turns()
+	
+	
+@rpc
+func receive(data: Array):
+	print("Data recieved: ", data)
+	
+	var encoded_deck = data[0]
+	var encoded_players = data[1]
+	var encoded_pile = data[2]
+	var encoded_garbage = data[3]
+	dutch = data[4]
+	# turn_timer = data[5]
+	turn_counter = data[6]
+	game_state = data[7]
+	
+	# decode deck
+	var temp_deck = []
+	for i in encoded_deck:
+		var c: CardData = all_cards[i]
+		temp_deck.push_back(c)
+	deck = temp_deck
+	
+	# decode pile
+	var temp_pile = []
+	for i in encoded_pile:
+		var c: CardData = all_cards[i]
+		temp_pile.push_back(c)
+	pile = temp_pile
+	
+	# decode garbage
+	var temp_garbage = []
+	for i in encoded_garbage:
+		var c: CardData = all_cards[i]
+		temp_garbage.push_back(c)
+	garbage = temp_garbage
+	
+	# decode players
+	var temp_players = []
+	for i in range(encoded_players.size()):
+		temp_players.push_back([])
+	for i in range(encoded_players.size()):
+		for j in i:
+			var c: CardData = all_cards[j]
+			temp_players[i].push_back(c)
+	players = temp_players
+
+	update.emit()
+	
+
+func send():
+	var encodedDeck = []
+	var encodedPile = []
+	var encodedGarbage = []
+	var encodedPlayers = []
+	
+	for i in deck:
+		encodedDeck.push_back(i.id)
+		
+	for i in pile:
+		encodedPile.push_back(i.id)
+	
+	for i in garbage:
+		encodedGarbage.push_back(i.id)
+		
+	for i in players:
+		encodedPlayers.push_back([])
+		
+	for i in players:
+		for j in i:
+			encodedPlayers.push_back(j.id)
+		
+	var data = [
+		encodedDeck, # fine ?
+		encodedPlayers, # fine
+		encodedPile, # fine ? 
+		encodedGarbage, # fine ?
+		dutch, # fine
+		turn_timer, # big issues
+		turn_counter, # fine
+		game_state # fine
+	]
+	rpc("receive", data)

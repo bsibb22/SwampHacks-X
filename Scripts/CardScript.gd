@@ -13,7 +13,8 @@ var z: float = 0.15
 var c: float = 1.0
 func _process(_delta: float) -> void:
 	if hovering:
-		print(data.card_value)
+		# print(data.card_value)
+		pass
 		
 	if hovering:
 		z = lerp(z, 0.2, 0.15)
