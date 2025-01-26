@@ -119,7 +119,7 @@ func _ready() -> void:
 		print("pid " + str(local_id) + " matched to online id " + str(GameManager.Players[i].id))
 		local_id += 1
 		
-	num_players = local_id + 1
+	num_players = local_id
 	print(num_players)
 		
 	# Create the pile of cards
@@ -140,7 +140,8 @@ func _ready() -> void:
 	#Let players check their cards
 	flippable_initial = true
 	#Dictionary tracks which players have checked their cards
-	for i in online_to_local_id:
+	print("siez of otli: " + str(online_to_local_id.size()))
+	for i in range(num_players):
 		checked_cards[i] = false
 	print("Checked Cards Initialized")
 	
@@ -148,6 +149,7 @@ func card_checked() -> void:
 	print("Card checked")
 	var temp = true
 	for i in checked_cards:
+		print("Player: " + str(i) + ", Checked: " + str(checked_cards[i]))
 		if !checked_cards[i]:
 			temp = false
 			

@@ -24,6 +24,7 @@ func _ready() -> void:
 #Used during the initial phase of the game
 func flip_init() -> void:
 	num_checked_cards += 1
+	print("Player: " + str(my_pid) + ", has checked: " + str(num_checked_cards) + " cards")
 	#If the player has checked two unique cards, let the Card Logic script know that it doesn't need to wait
 	#on this player
 	if num_checked_cards >= 2:
