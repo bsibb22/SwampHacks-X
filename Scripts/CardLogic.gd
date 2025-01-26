@@ -12,6 +12,9 @@ var my_pid = 0
 var num_players = 0
 var dutch = false
 var my_turn = false
+#Allows cards to be flipped during the first turn of the game
+var flippable_initial = false
+var checked_cards = {}
 var turns_till_end = 9223372036854775807
 
 func load_img(id: int) -> CompressedTexture2D:
@@ -98,9 +101,7 @@ var players = [] # 2d player array
 var pile = [] # face up pile of cards you can choose from
 var garbage = [] # cards that have been lost to time
 
-func _ready() -> void:
-	start_turns()
-	
+func _ready() -> void:	
 	# match local and online ids
 	var local_id = 0
 	my_online_id = multiplayer.get_unique_id()
@@ -130,6 +131,23 @@ func _ready() -> void:
 	for i in range(num_players):
 		players.push_back([])
 		deal_card(i, 4)
+		
+	#Let players check their cards
+	flippable_initial = true
+	#Dictionary tracks which players have checked their cards
+	for i in online_to_local_id:
+		checked_cards[i] = false
+	var all_cards_checked = false
+	#Block until all players have checked their cards
+	while !all_cards_checked:
+		var temp = true
+		for i in checked_cards:
+			if !checked_cards[i]:
+				temp = false
+		all_cards_checked = temp
+	
+	
+	start_turns()
 
 
 func _process(_delta) -> void:

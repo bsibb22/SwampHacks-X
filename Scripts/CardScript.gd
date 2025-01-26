@@ -5,6 +5,9 @@ extends Node2D
 @onready var main = get_node("../../")
 @onready var hovering = false
 @onready var my_pid = main.my_pid
+var flipped = false
+#Used to make sure that the player does not flip the same card twice during the beginning of the game
+var previously_flipped = false
 
 func _ready() -> void:
 	sprite.texture = main.load_img(-1)
@@ -35,9 +38,37 @@ func _input(event):
 				main.deal_card(my_pid, 2)
 			else:
 				main.remove_card(my_pid, data, true)
-	
+	#Handles Flipping
+	elif hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		var parent_pid = get_parent().pid
+		#Will be used for face cards
+		if parent_pid != my_pid:
+			return
+		#Only works at the beginning of the game
+		elif main.flippable_inital and !previously_flipped:
+			flip()
+			previously_flipped = true
+			var timer : Timer = Timer.new()
+			timer.wait_time = 5
+			timer.autostart = true
+			timer.start()
+			flip()
+			get_parent()	.flip_init()
+			
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
 
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
+	
+#Flips the card by changing the sprite
+func flip() -> void:
+	
+	if !flipped:
+		sprite = main.load_img(data.id)
+		flipped = true
+	else:
+		sprite = main.load_img(-1)
+		flipped = false
+	
+	pass
