@@ -80,7 +80,7 @@ func start_turns() -> void:
 	turn_timer.start()
 
 func change_turns() -> void:
-	start_turns()
+	# start_turns()
 	print("turns changed!")
 	turn_counter += 1
 	if dutch:
@@ -94,6 +94,9 @@ func change_turns() -> void:
 	else:
 		my_turn = false
 		$"Control/Dutch Button".visible = false
+		
+	if players[turn_counter].size() <= 0:
+		change_turns()
 
 # ---- #
 
@@ -117,7 +120,7 @@ func _ready() -> void:
 		print("pid " + str(local_id) + " matched to online id " + str(GameManager.Players[i].id))
 		local_id += 1
 		
-	num_players = local_id + 1
+	num_players = local_id
 	print(num_players)
 		
 	# Create the pile of cards
@@ -134,19 +137,27 @@ func _ready() -> void:
 	for i in range(num_players):
 		players.push_back([])
 		deal_card(i, 4)
+		print("player " + str(i) + "'s cards: ")
+		for j in players[i]:
+			print(j.card_value)
 
 
 func _process(_delta) -> void:
-	#Ending the game needs to be filled out
+	# check if any players have run out of cards
+	for i in players:
+		if i.size() <= 0:
+			_on_dutch_button_button_down()
+	
 	if turns_till_end == 0:
 		print("Game Over")
 		turn_timer.stop()
 		var winner_pid = 20
 		var winner_score = 9223372036854775807
-		for i in range(num_players):
+		for i in range(players.size()):
 			var score = 0
 			for j in players[i]:
 				score += j.card_value
+			print("player " + str(i) + "'s score is " + str(score))
 			if score < winner_score:
 				winner_pid = i
 				winner_score = score
@@ -163,7 +174,7 @@ func _process(_delta) -> void:
 #This is broken
 func _on_dutch_button_button_down() -> void:
 	print("Dutch button pressed")
-	turns_till_end = num_players
+	turns_till_end = num_players - 1
 	print("Turns till end: " + str(turns_till_end))
 	dutch = true
 	change_turns()
