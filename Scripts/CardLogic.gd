@@ -21,7 +21,7 @@ func load_img(id: int) -> CompressedTexture2D:
 	if(id == -1):
 		return CARDBACK
 	else:
-		return IMAGE_BANK[id]
+		return load("res://Sprites/CardSprites/" + str(id) + ".png")
 
 func shuffle_deck() -> void:
 	# Save the most recently played card

@@ -49,10 +49,12 @@ func _input(event):
 			flip()
 			previously_flipped = true
 			var timer : Timer = Timer.new()
-			timer.wait_time = 5
+			timer.timeout.connect(flip)
+			timer.wait_time = 3
+			timer.one_shot = true
 			timer.autostart = true
 			timer.start()
-			flip()
+			add_child(timer)
 			get_parent()	.flip_init()
 			
 func _on_area_2d_mouse_entered() -> void:
@@ -63,12 +65,12 @@ func _on_area_2d_mouse_exited() -> void:
 	
 #Flips the card by changing the sprite
 func flip() -> void:
-	
+	print("Data: " + str(data.id))
 	if !flipped:
-		sprite = main.load_img(data.id)
+		sprite.texture = main.load_img(data.id)
 		flipped = true
 	else:
-		sprite = main.load_img(-1)
+		sprite.texture = main.load_img(-1)
 		flipped = false
 	
 	pass
