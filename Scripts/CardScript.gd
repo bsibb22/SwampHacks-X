@@ -26,6 +26,7 @@ func _process(_delta: float) -> void:
 
 func _ready() -> void:
 	sprite.texture = main.load_img(-1)
+	main._flippity.connect(flip)
 		
 # finish coding this after multiplayer is added
 func _input(event):

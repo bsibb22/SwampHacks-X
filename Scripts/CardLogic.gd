@@ -1,6 +1,7 @@
 extends Node2D
 
 signal update
+signal _flippity
 
 @onready var IMAGE_BANK = []
 @onready var CARDBACK = load("res://Sprites/CardSprites/-1.png")
@@ -14,6 +15,7 @@ var num_players = 0
 var jacking_it = false
 var tenten = false
 var dutch = false
+var i_cant_take_it_anymore = true
 var my_turn = false
 #Allows cards to be flipped during the first turn of the game
 var flippable_initial = true
@@ -198,28 +200,31 @@ func _process(_delta) -> void:
 		if i.size() <= 0:
 			_on_dutch_button_button_down()
 	
-	if turns_till_end == 0:
-		print("Game Over")
-		turn_timer.stop()
-		var winner_pid = 20
-		var winner_score = 9223372036854775807
-		for i in range(players.size()):
-			var score = 0
-			for j in players[i]:
-				score += j.card_value
-			print("player " + str(i) + "'s score is " + str(score))
-			if score < winner_score:
-				winner_pid = i
-				winner_score = score
-		if my_pid == winner_pid:
-			print("winner winner chicken dinner")
-		else:
-			print("fuck you")
-		turns_till_end -= 1
-		var ending_menu = ending.instantiate()
-		add_child(ending_menu)
+	if turns_till_end <= 0 and i_cant_take_it_anymore:
+		end_this_shit()
 
-
+func end_this_shit() -> void:
+	_flippity.emit()
+	i_cant_take_it_anymore = false
+	print("Game Over")
+	turn_timer.stop()
+	var winner_pid = 20
+	var winner_score = 9223372036854775807
+	for i in range(players.size()):
+		var score = 0
+		for j in players[i]:
+			score += j.card_value
+		print("player " + str(i) + "'s score is " + str(score))
+		if score < winner_score:
+			winner_pid = i
+			winner_score = score
+	if my_pid == winner_pid:
+		print("winner winner chicken dinner")
+	else:
+		print("fuck you")
+	turns_till_end -= 1
+	var ending_menu = ending.instantiate()
+	add_child(ending_menu)
 
 #This is broken
 func _on_dutch_button_button_down() -> void:
