@@ -21,7 +21,7 @@ CARD IDS
 '''
 
 func _init(_id: int, _owner = 9):
-	card_value = 0 if id >= 52 else (id % 13) + 1
+	card_value = 0 if _id >= 52 else (_id % 13) + 1
 	id = _id
 	owner = _owner
 

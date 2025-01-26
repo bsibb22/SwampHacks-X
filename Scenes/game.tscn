@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://brpwuwsr5kvqp"]
+[gd_scene load_steps=10 format=3 uid="uid://be473xjr1o21t"]
 
 [ext_resource type="Script" path="res://Scripts/CardLogic.gd" id="1_3xefb"]
 [ext_resource type="Texture2D" uid="uid://bll58tk6aa0ex" path="res://Sprites/background.tres" id="2_idmhq"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="4_80nag"]
 [ext_resource type="Texture2D" uid="uid://bo3tp5bw4l543" path="res://Sprites/CardSprites/-1.png" id="5_5dtl7"]
 [ext_resource type="Script" path="res://Scripts/Pile.gd" id="6_a7jie"]
-[ext_resource type="PackedScene" uid="uid://dfuy1mgqyj65a" path="res://Objects/player.tscn" id="6_hto42"]
+[ext_resource type="PackedScene" uid="uid://bm2ihxhwmq4k3" path="res://Objects/player.tscn" id="6_hto42"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4eqw4"]
 size = Vector2(220.774, 323.229)
@@ -21,6 +21,7 @@ script = ExtResource("1_3xefb")
 position = Vector2(0.00012207, 0.000244141)
 scale = Vector2(23.9375, 16.7892)
 texture = ExtResource("2_idmhq")
+metadata/_edit_lock_ = true
 
 [node name="PokerTableSketch" type="Sprite2D" parent="."]
 position = Vector2(0.00012207, 0.00012207)
@@ -53,7 +54,6 @@ texture = ExtResource("5_5dtl7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pile/Sprite2D/Area2D"]
 position = Vector2(-0.935516, 0.991491)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_5jksx")
 
 [node name="Player" parent="." instance=ExtResource("6_hto42")]

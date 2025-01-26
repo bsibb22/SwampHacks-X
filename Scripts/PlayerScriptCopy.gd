@@ -2,7 +2,6 @@ extends Node2D
 
 @onready var card_scene = preload("res://Objects/card.tscn")
 @onready var my_pid = get_parent().my_pid
-var num_checked_cards = 0
 
 var selection_state: String = ""
 
@@ -25,11 +24,3 @@ func _process(_delta: float) -> void:
 
 func _ready() -> void:
 	get_parent().update.connect(update_hand)
-
-#Used during the initial phase of the game
-func flip_init() -> void:
-	num_checked_cards += 1
-	#If the player has checked two unique cards, let the Card Logic script know that it doesn't need to wait
-	#on this player
-	if num_checked_cards >= 2:
-		get_parent().checked_cards[my_pid] = true
