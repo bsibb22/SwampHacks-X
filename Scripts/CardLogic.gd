@@ -105,4 +105,4 @@ func _ready() -> void:
 		print(players[i])
 
 func _process(_delta) -> void:
-	print(player_ids[turn_counter])
+	pass

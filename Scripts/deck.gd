@@ -10,11 +10,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-# func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _input(event) -> void:
+	if hovering == true and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		get_parent().deal_card(global.pid, 1)
 
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
-	print("entered")
 
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
