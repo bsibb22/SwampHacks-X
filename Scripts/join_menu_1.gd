@@ -35,3 +35,10 @@ func _on_join_button_down() -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/multiplayer_options.tscn")
+	
+@rpc("any_peer", "call_local")
+func StartGame() -> void:
+	'''var scene = load("res://Scenes/game.tscn").instantiate()
+	get_tree().root.add_child(scene)
+	self.hide()'''
+	get_tree().change_scene_to_file("res://Scenes/game.tscn")
